@@ -8,6 +8,7 @@ import connectDB from './config/db.js'
 import { appConfig, passportConfig, sessionConfig } from './config/app.config.js'
 import { initializeRoutes } from './routes/index.js'
 import errorHandler from './middlewares/errorHandler.js'
+import { addLogger } from './config/logger.js'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 8080
 
 const startServer = async () => {
     try {
+        app.use(addLogger)
         appConfig(app)
         await connectDB()
         sessionConfig(app)
@@ -25,6 +27,7 @@ const startServer = async () => {
         initializeRoutes(app)
 
         app.use(errorHandler)
+        
 
         const httpServer = app.listen(PORT, console.log(`Server running on: http://localhost:${PORT}`))
 
