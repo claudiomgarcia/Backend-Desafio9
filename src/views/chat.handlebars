@@ -30,7 +30,6 @@
     })
 
     socket.on("messageLogs", data => {
-        console.log(data)
         let log = document.getElementById('messageLogs')
         let messages = ""
         data.forEach(message => {

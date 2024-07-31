@@ -23,6 +23,11 @@ winston.addColors(customLevelsOptions.colors)
 
 const developmentLogger = winston.createLogger({
     levels: customLevelsOptions.levels,
+    format: winston.format.combine(
+        winston.format.colorize({ all: true }),
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.printf(({ timestamp, level, message }) => `${timestamp} (${level}): ${message}`)
+    ),
     transports: [
         new winston.transports.Console({ level: 'debug' })
     ]
@@ -30,6 +35,11 @@ const developmentLogger = winston.createLogger({
 
 const productionLogger = winston.createLogger({
     levels: customLevelsOptions.levels,
+    format: winston.format.combine(
+        winston.format.colorize({ all: true }),
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.printf(({ timestamp, level, message }) => `${timestamp} (${level}): ${message}`)
+    ),
     transports: [
         new winston.transports.Console({ level: 'info' }),
         new winston.transports.File({ filename: './src/logs/errors.log', level: 'error' })
@@ -43,3 +53,5 @@ export const addLogger = (req, res, next) => {
     req.logger.http(`${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
     next()
 }
+
+export default logger

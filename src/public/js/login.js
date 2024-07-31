@@ -43,7 +43,6 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             })
         }
     } catch (error) {
-        console.log(error)
         Swal.fire({
             icon: 'error',
             title: 'Error',

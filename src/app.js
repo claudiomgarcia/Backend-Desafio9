@@ -9,6 +9,7 @@ import { appConfig, passportConfig, sessionConfig } from './config/app.config.js
 import { initializeRoutes } from './routes/index.js'
 import errorHandler from './middlewares/errorHandler.js'
 import { addLogger } from './config/logger.js'
+import logger from './config/logger.js'
 
 dotenv.config()
 
@@ -27,17 +28,23 @@ const startServer = async () => {
         initializeRoutes(app)
 
         app.use(errorHandler)
-        
 
-        const httpServer = app.listen(PORT, console.log(`Server running on: http://localhost:${PORT}`))
 
-        const socketServer = new Server(httpServer)
-        socketProducts(socketServer)
-        socketChat(socketServer)
-    } catch (error) {
-        console.error('Failed to connect to the database', error)
-        process.exit(1)
-    }
+        const httpServer = app.listen(PORT, logger.info(`Server running on: http://localhost:${PORT}`))
+
+        if (process.env.NODE_ENV === 'production') {
+            logger.info('Server running in Production')
+        } else {
+            logger.info('Server running in Development')
+        }
+
+    const socketServer = new Server(httpServer)
+    socketProducts(socketServer)
+    socketChat(socketServer)
+} catch (error) {
+    logger.error('Failed to connect to the database', error)
+    process.exit(1)
+}
 }
 
 startServer()

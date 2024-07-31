@@ -46,7 +46,6 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             })
         }
     } catch (error) {
-        console.log(error)
         Swal.fire({
             icon: 'error',
             title: 'Error',

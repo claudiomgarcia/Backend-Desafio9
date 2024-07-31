@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function deleteProduct(cid, pid) {
-    console.log("cid:" + cid)
-    console.log("pid:" + pid)
     Swal.fire({
         title: '¿Estás seguro?',
         icon: 'warning',

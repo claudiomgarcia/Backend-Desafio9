@@ -3,7 +3,7 @@ import { EErrors } from "../services/errors/enum.js"
 const errorHandler = (error, req, res, next) => {
     switch (error.code) {
         case EErrors.INVALID_TYPES_ERROR:
-            console.log(error.cause)
+            logger.error(error.cause)
             res.status(400).json({ status: "error", error: error.name, message: error.message })
             break
         case EErrors.ROUTING_ERROR:
